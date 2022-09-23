@@ -366,7 +366,7 @@ export class MSICreator {
       : this.wxsFile;
 
     if (this.ui && !this.extensions.find((e) => e === 'WixUIExtension')) {
-      this.extensions.push('WixUIExtension');
+      //this.extensions.push('WixUIExtension');
     }
 
     if (!this.extensions.find((e) => e === 'WixUtilExtension')) {
