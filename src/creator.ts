@@ -152,6 +152,7 @@ export class MSICreator {
   private registry: Array<Registry> = [];
   private tree: FileFolderTree | undefined;
   private components: Array<Component> = [];
+  private exeComponentID: string = '';
 
   constructor(options: MSICreatorOptions) {
     this.appDirectory = path.normalize(options.appDirectory);
@@ -322,6 +323,7 @@ export class MSICreator {
       '{{RandomGuid}}': uuid().toString(),
       '{{RebootMode}}': this.rebootMode,
       '{{InstallLevel}}': this.installLevel.toString(10),
+      '{{exeComponentID}}' : this.exeComponentID,
       '\r?\n.*{{remove newline}}': ''
     };
 
@@ -600,6 +602,10 @@ export class MSICreator {
       '{{Guid}}': guid,
       '{{SourcePath}}': file.path
     });
+
+    if (file.name.includes(this.exe)) {
+      this.exeComponentID = componentId;
+    }
 
     return { guid, componentId, xml, file, featureAffinity: file.featureAffinity || 'main' };
   }
